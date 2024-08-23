@@ -17,6 +17,22 @@ body{
 
 
 main{
+    max-width: 1440px;
+    width: 100%;
+    margin: 0 auto;
+    height: 100vh;
     display: flex;
+    justify-content: center;
+    align-self: center;
+    border:1px solid red;
+
 }
 
+.cards-container{
+    flex: 1;
+    background:linear-gradient( to right, var(--color-violet) 50%, #ebebeb 50% );
+}
+
+.form-container{
+    flex: 1;
+}

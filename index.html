@@ -36,14 +36,14 @@
             </div>
 
 
-            <div claclass="back-card">
+            <div class="back-card">
                 <div class="line-card"></div>
 
-                <div>
+                <div class="card-cvc-container">
                     <p class="card-cvc">000</p>
                 </div>
                
-                <svg width="186" height="26" viewBox="0 0 186 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg id="background-svg-card" width="186" height="26" viewBox="0 0 186 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect width="115" height="4" rx="2" fill="#ADB5BE"/>
                     <rect x="121" width="22" height="4" rx="2" fill="#ADB5BE"/>
                     <rect x="149" width="22" height="4" rx="2" fill="#ADB5BE"/>
@@ -74,10 +74,13 @@
                 </div>
 
                 <div class="exp-data-card">
-                    <div class="input-container inputs-date">
+                    <div class="inputs-date">
                         <label for="">Exp. Date (MM/YY)</label>
-                        <input type="text" placeholder="MM">
-                        <input type="text" placeholder="YY">
+                        <div>
+                            <input type="text" placeholder="MM">
+                            <input type="text" placeholder="YY">
+                        </div>
+                        
                     </div>
                     <div class="input-container">
                         <label for="">CVC</label>
@@ -85,7 +88,7 @@
                     </div>
                 </div>
 
-                <button>Confirm</button>
+                <button id="btn-confirm">Confirm</button>
             </form>
         </div>
     </main>

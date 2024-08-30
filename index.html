@@ -23,13 +23,13 @@
                 
                 
                 <div class="info-front-card">
-                    <p class="card-number">0000 0000 0000 0000</p>
+                    <p class="card-number" id="cardNumberTxt">0000 0000 0000 0000</p>
                     <div class="name-date-container">
-                        <p class="cardholder-name">JANE APPLESEED</p>
+                        <p class="cardholder-name" id="cardNameTxt">JANE APPLESEED</p>
                         <div class="exp-date">
-                            <p class="mm">00</p>
+                            <p class="mm" id="cardMonthTxt">00</p>
                             <p>/</p>
-                            <p class="YY">00</p>
+                            <p class="YY" id="cardYearTxt">00</p>
                         </div>
                     </div>
                 </div>
@@ -40,7 +40,7 @@
                 <div class="line-card"></div>
 
                 <div class="card-cvc-container">
-                    <p class="card-cvc">000</p>
+                    <p class="card-cvc" id="cardCvcTxt">000</p>
                 </div>
                
                 <svg id="background-svg-card" width="186" height="26" viewBox="0 0 186 26" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -66,25 +66,25 @@
             <form action="" >
                 <div class="input-container">
                     <label for="">Cardholder Name</label>
-                    <input type="text" placeholder="e.g. Jane Appleseed">
+                    <input type="text" placeholder="e.g. Jane Appleseed" id="cardName" data-update-target="cardNameTxt" >
                 </div>
                 <div class="input-container">
                     <label for="">Card Number</label>
-                    <input type="text" placeholder="e.g. 1234 5678 9123 0000">
+                    <input type="text" placeholder="e.g. 1234 5678 9123 0000" id="cardNumber" data-update-target="cardNumberTxt">
                 </div>
 
                 <div class="exp-data-card">
                     <div class="inputs-date">
                         <label for="">Exp. Date (MM/YY)</label>
                         <div>
-                            <input type="text" placeholder="MM">
-                            <input type="text" placeholder="YY">
+                            <input type="text" placeholder="MM" id="cardMonth" data-update-target="cardMonthTxt">
+                            <input type="text" placeholder="YY" id="cardYear" data-update-target="cardYearTxt">
                         </div>
                         
                     </div>
                     <div class="input-container">
                         <label for="">CVC</label>
-                        <input type="text" placeholder="e.g. 123">
+                        <input type="text" placeholder="e.g. 123" id="cardCvc" data-update-target="cardCvcTxt">
                     </div>
                 </div>
 
@@ -117,5 +117,24 @@
             </div>
         </div>
     </main>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <script src="./script.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#cardNumber').mask('0000 0000 0000 0000');
+            $('#cardMonth').mask('00');
+            $('#cardYear').mask('00');
+            $('#cardCvc').mask('000');
+            $('#cardName').mask('Jane Applesee');
+        });
+
+
+         
+    </script>
+
+    
 </body>
 </html>

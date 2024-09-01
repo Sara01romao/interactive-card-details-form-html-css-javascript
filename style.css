@@ -190,7 +190,7 @@ main{
 
 .exp-data-card{
     display: flex;
-    align-items: center;
+    align-items: baseline;
     gap: 20px;
 }
 
@@ -219,6 +219,14 @@ main{
   border: 1px solid #DFDEE0;
 }
 
+.error-message{
+    color: #FF5050;
+}
+
+div input.activeErro, div input.activeErro:focus{
+    border: 2px solid #FF5050;
+    outline: 0;
+}
 
 #btn-confirm, .btn-continue{
     background: var(--color-violet);

@@ -63,14 +63,16 @@
         </div>
 
         <div class="form-container">
-            <form action="" >
+            <form action="" id="cardForm" >
                 <div class="input-container">
                     <label for="">Cardholder Name</label>
                     <input type="text" placeholder="e.g. Jane Appleseed" id="cardName" data-update-target="cardNameTxt" >
+                    <span class="error-message" id="nameError"></span>
                 </div>
                 <div class="input-container">
                     <label for="">Card Number</label>
                     <input type="text" placeholder="e.g. 1234 5678 9123 0000" id="cardNumber" data-update-target="cardNumberTxt">
+                    <span class="error-message" id="numberError"></span>
                 </div>
 
                 <div class="exp-data-card">
@@ -80,15 +82,17 @@
                             <input type="text" placeholder="MM" id="cardMonth" data-update-target="cardMonthTxt">
                             <input type="text" placeholder="YY" id="cardYear" data-update-target="cardYearTxt">
                         </div>
+                        <span class="error-message" id="dateError"></span>
                         
                     </div>
                     <div class="input-container">
                         <label for="">CVC</label>
                         <input type="text" placeholder="e.g. 123" id="cardCvc" data-update-target="cardCvcTxt">
+                        <span class="error-message" id="cvcError"></span>
                     </div>
                 </div>
 
-                <button id="btn-confirm">Confirm</button>
+                <button type="submit" id="btn-confirm">Confirm</button>
             </form>
 
             <div class="thank-container">
@@ -128,7 +132,7 @@
             $('#cardMonth').mask('00');
             $('#cardYear').mask('00');
             $('#cardCvc').mask('000');
-            $('#cardName').mask('Jane Applesee');
+           
         });
 
 

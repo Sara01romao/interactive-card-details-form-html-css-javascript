@@ -137,19 +137,25 @@ document.getElementById('cardNumber').addEventListener('blur', function() {
 // Validação do Mês
 document.getElementById('cardMonth').addEventListener('blur', function() {
     const month = this.value.trim(); 
-    const nextInput = this.nextElementSibling;
     const monthPattern = /^(0[1-9]|1[0-2])$/; 
+    const errorElement = document.getElementById('dateError');
+    const nextInput = this.nextElementSibling;
 
-    if (!monthPattern.test(month)) {
+    // Verifica se o mês está fora do intervalo permitido
+    if (!monthPattern.test(month) || month === '00' ) {
         this.classList.add('activeErro');
-        document.getElementById('dateError').textContent = 'Invalid month.';
+        errorElement.textContent = 'Invalid month.';
 
         if (nextInput && nextInput.tagName === 'INPUT') {
             nextInput.classList.add('activeErro');
         }
     } else {
         this.classList.remove('activeErro');
-        document.getElementById('dateError').textContent = '';
+        errorElement.textContent = '';
+
+        if (nextInput && nextInput.tagName === 'INPUT') {
+            nextInput.classList.remove('activeErro');
+        }
     }
 });
 
@@ -296,3 +302,32 @@ document.getElementById('cardName').addEventListener('input', function(e) {
    
     e.target.value = valor;
 });
+
+
+document.getElementById('cardMonth').addEventListener('input', function(e) {
+    const maxLength = 2; 
+    let valor = e.target.value;
+    let inputMonth= document.getElementById('cardMonth');
+  
+    valor = valor.replace(/\D/g, '');
+    
+   
+    if (valor.length > maxLength) {
+        valor = valor.slice(0, maxLength);
+    }
+    
+  
+    if (valor.length === 2) {
+        const monthNumber = parseInt(valor, 10);
+        if (monthNumber < 1 || monthNumber > 12) {
+            inputMonth.classList.add('activeErro');
+            valor = ''; 
+        }
+    }
+    
+ 
+    e.target.value = valor;
+});
+
+
+

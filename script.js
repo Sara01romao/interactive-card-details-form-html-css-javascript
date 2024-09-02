@@ -47,21 +47,26 @@ document.getElementById('cardForm').addEventListener('submit', function(event) {
         inputMonth.classList.remove('activeErro');
         inputYear.classList.remove('activeErro');
         document.getElementById('dateError').textContent = ''; 
-        valid = true;
+        
     }
 
     // Validação do CVC
     const cvc = document.getElementById('cardCvc').value.trim();
-    const cvcPattern = /^[0-9]{3}$/;
+    const cvcPattern = /^[0-9]{3}$/; 
     const inputCvc = document.getElementById('cardCvc');
-
-    if (!cvcPattern.test(cvc) ) {
-        document.getElementById('cvcError').textContent = 'Can’t be blank';
+    
+    if (!cvcPattern.test(cvc)) {
+        if (cvc === "") {
+            document.getElementById('cvcError').textContent = 'Can’t be blank';
+        } else {
+            document.getElementById('cvcError').textContent = 'Must be 3 digits';
+        }
         inputCvc.classList.add('activeErro');
         valid = false;
     } else {
         document.getElementById('cvcError').textContent = '';
-        inputCvc.classList.add('activeErro');
+        inputCvc.classList.remove('activeErro'); 
+        
     }
 
     // Se tudo estiver válido, você pode continuar com o processamento do formulário
@@ -129,13 +134,15 @@ document.getElementById('cardNumber').addEventListener('blur', function() {
     }
 });
 
+// Validação do Mês
 document.getElementById('cardMonth').addEventListener('blur', function() {
-    const month = this.value;
-    const nextInput = this.nextElementSibling; 
-    
-    if (month === '' || month.length < 2 || month === "00") {
+    const month = this.value.trim(); 
+    const nextInput = this.nextElementSibling;
+    const monthPattern = /^(0[1-9]|1[0-2])$/; 
+
+    if (!monthPattern.test(month)) {
         this.classList.add('activeErro');
-        document.getElementById('dateError').textContent = 'Can’t be blank';
+        document.getElementById('dateError').textContent = 'Invalid month.';
 
         if (nextInput && nextInput.tagName === 'INPUT') {
             nextInput.classList.add('activeErro');
@@ -146,35 +153,31 @@ document.getElementById('cardMonth').addEventListener('blur', function() {
     }
 });
 
+// Validação do Ano
 document.getElementById('cardYear').addEventListener('blur', function() {
-    const year = this.value;
+    const year = this.value.trim(); 
     const inputYear = document.getElementById('cardYear'); 
+    const yearPattern = /^[0-9]{2}$/; 
 
-    if (year === '' ||  year.length < 2 || year ==="00") {
+    if (!yearPattern.test(year) || year === '00') {
         inputYear.classList.add('activeErro');
-        document.getElementById('dateError').textContent = 'Can’t be blank';
-
-        if (nextInput && nextInput.tagName === 'INPUT') {
-            inputYear.classList.add('activeErro');
-        }
+        document.getElementById('dateError').textContent = 'Invalid year.';
     } else {
         inputYear.classList.remove('activeErro');
         document.getElementById('dateError').textContent = '';
     }
 });
 
+
+
 document.getElementById('cardCvc').addEventListener('blur', function() {
-    const cvc = this.value;
-    const cvcPattern = /^[0-9]{3}$/;
+    const cvc = this.value.trim(); 
+    const cvcPattern = /^[0-9]{3}$/; 
     const inputCvc = document.getElementById('cardCvc'); 
 
     if (!cvcPattern.test(cvc)) {
         inputCvc.classList.add('activeErro');
         document.getElementById('cvcError').textContent = 'Can’t be blank';
-
-        if (nextInput && nextInput.tagName === 'INPUT') {
-            inputCvc.classList.add('activeErro');
-        }
     } else {
         inputCvc.classList.remove('activeErro');
         document.getElementById('cvcError').textContent = '';
@@ -184,43 +187,75 @@ document.getElementById('cardCvc').addEventListener('blur', function() {
 
 
 
-
-
-
-
-
-
-
-
 function atualizarElementoComInput(inputValue, elementId) {
     const element = document.getElementById(elementId);
-    console.log(elementId)
 
-    console.log(typeof(inputValue),  inputValue.charAt(0))
+    // Processamento baseado no ID do elemento
+    switch (elementId) {
+        case 'cardNameTxt':
+            
+            inputValue = inputValue.replace(/[^a-zA-Z\s]/g, ''); 
+            if (inputValue.trim() === '') {
+                inputValue = 'e.g. Jane Applesee';
+            }
+            break;
 
-    if(inputValue === "" ){
-        if(elementId === 'cardNumberTxt'){
-            element.textContent = "0000 0000 0000 0000";
+        case 'cardNumberTxt':
+         
+            inputValue = inputValue.replace(/\D/g, '');
+            inputValue = inputValue.slice(0, 16);
+            inputValue = inputValue.match(/.{1,4}/g)?.join(' ') || '0000 0000 0000 0000';
+            break;
 
-        }else if(elementId === 'cardNameTxt'){
-       
+        case 'cardMonthTxt':
+           
+            inputValue = inputValue.slice(0, 2).padStart(2, '0');
+            const monthNumber = parseInt(inputValue, 10);
+            if (isNaN(monthNumber) || monthNumber < 1 || monthNumber > 12) {
+                inputValue = '00'; // Valor inválido para o mês
+            }
+            break;
 
-            element.textContent = "e.g. Jane Applesee";
+        case 'cardYearTxt':
+          
+            inputValue = inputValue.slice(0, 2).padStart(2, '0');
+            break;
+
+        case 'cardCvcTxt':
         
-        } else if(elementId === 'cardMonthTxt' || elementId === 'cardYearTxt' ){
-           
-            element.textContent = "00";
+            inputValue = inputValue.slice(0, 3);
+            break;
+
+        default:
             
-        }else if(elementId === 'cardCvcTxt' ){
-           
-            element.textContent = "000";
-            
+            return;
+    }
+
+   
+    if (inputValue === '') {
+        switch (elementId) {
+            case 'cardNumberTxt':
+                element.textContent = '0000 0000 0000 0000';
+                break;
+            case 'cardNameTxt':
+                element.textContent = 'e.g. Jane Applesee';
+                break;
+            case 'cardMonthTxt':
+            case 'cardYearTxt':
+                element.textContent = '00';
+                break;
+            case 'cardCvcTxt':
+                element.textContent = '000';
+                break;
+            default:
+                element.textContent = '';
+                break;
         }
-    }else{
-            element.textContent = inputValue;
-        }
-    
+    } else {
+        element.textContent = inputValue;
+    }
 }
+
 
 // Adicionando o evento para múltiplos campos de input
 document.querySelectorAll('input[data-update-target]').forEach(function(input) {
@@ -251,6 +286,7 @@ document.getElementById('cardNumber').addEventListener('input', function(e) {
 document.getElementById('cardName').addEventListener('input', function(e) {
     const maxLength = 15; 
     let valor = e.target.value;
+    valor = valor.replace(/[^a-zA-Z\s]/g, '');
 
     
     if (valor.length > maxLength) {
